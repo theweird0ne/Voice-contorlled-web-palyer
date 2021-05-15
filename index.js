@@ -6,7 +6,7 @@ app.set('view engine','ejs');
 app.set('views',path.join(__dirname,'views'))
 app.use('/assets',express.static(path.join(__dirname,'assets')));
 
-app.get('/play',(req,res)=>{
+app.get('/new',(req,res)=>{
     res.render('display');
 })
 
