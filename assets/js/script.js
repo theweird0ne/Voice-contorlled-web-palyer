@@ -1,14 +1,13 @@
 //get our elements
 
 const player=document.querySelector('.player');
-
 const video=player.querySelector('.viewer');
 const progress=player.querySelector('.progress');
 const progressBar=player.querySelector('.progress__filled');
 const toggle=player.querySelector('.toggle');
 const skipButtons=player.querySelectorAll('[data-skip]');
 const ranges=player.querySelectorAll('.player__slider');
-
+const Volume=player.querySelector('#vloume');
 // build out functions
 
 function togglePlay(){
@@ -32,7 +31,23 @@ function skip(){
 
 function handleRangeUpdate(){
 video[this.name]=this.value;
+console.log(this.name,this.value)
 }
+function getVolume() { 
+    alert(video.volume);
+  } 
+    
+  function increaseVolume(){
+    if(video.volume<=.90){ 
+    video.volume+=.10;
+    }
+  } 
+    
+  function decreaseVolume(){ 
+    if(video.volume>=.10){ 
+        video.volume-=.10;
+    }
+  } 
 
 function handleProgress(){
     const percent=(video.currentTime/video.duration)*100;
@@ -59,6 +74,7 @@ progress.addEventListener('mousedown',()=>mousedown=true);
 progress.addEventListener('mouseup',()=>mousedown=false);
 
 
+
 window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
 const recognition = new SpeechRecognition();
@@ -78,10 +94,26 @@ recognition.addEventListener('result', e => {
         // for play voice command
         if(transcript==='play'){
             video.play();
+            updateButton();
         }
         // for pause voice command
         else if(transcript==="pause"){
             video.pause();
+            updateButton();
+        }
+        // for fastforward
+        else if(transcript==="forward"){
+            video.currentTime+=10;
+        }
+        // for going back
+        else if(transcript==="back"){
+            video.currentTime+=-10;
+        }
+        else if(transcript==="increase"){
+           increaseVolume();
+        }
+        else if(transcript==="decrease"){
+            decreaseVolume();
         }
     console.log(transcript);
 });
