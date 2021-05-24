@@ -8,7 +8,18 @@ const UserSchema=new Schema({
         type:String,
         required:true,
         unique:true
-    }
+    },
+    name:{
+        type:String,
+        required:true,
+    },
+    playlists:[
+        {
+            type:Schema.Types.ObjectId,
+            ref:'Playlist'
+        }    
+    ]
+
 });
 
 UserSchema.plugin(passportLocalMongoose);
