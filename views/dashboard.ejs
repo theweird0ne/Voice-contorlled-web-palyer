@@ -7,29 +7,47 @@
     <title>Dashboard</title>
     <!-- CSS only -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+<link rel="stylesheet" href="/assets/css/dashboard_style.css">
 </head>
 <body>
-    <div class="container mt-5">
-        <h2>hello <%=currentUser.name%></h2>
-        <!-- <h2>hello <%=currentUser.playlists%></h2> -->
-    <h3>Update your playlist</h3>
-
-    <form action="/dashboard/<%=currentUser.id%>" method="POST" class="container mt-5">
-          <div class="mb-3">
-            <label for="title" class="form-label">Title</label>
-            <input type="text" class="form-control" id="title" name="playlist[title]" required>
-          </div>
-          <div class="mb-3">
-            <label for="file" class="form-label">Select file</label>
-            <input type="text" class="form-control" id="file" name="playlist[media_file]" required>
-          </div>
-          <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
   
-        <h2>available</h2>
-        <% for(let p of playlist.playlists){ %>
-            <p><%=p.title%></p>
-        <%}%>    
+    <div class="container mt-5">
+      <a href="/">Go back</a>
+      <div class="jumbotron mt-3">
+        <h1 class="display-4">Hello, <%=currentUser.name%></h1>
+        <p class="lead">Enjoy our voice controlled web player and file storage platform.</p>
+        <hr class="my-4">
+        <p>Add more files to our platform to save your computer data storage.</p>
+        <p class="lead">
+          <a class="btn btn-primary btn-sm" href="/new" role="button">Upload</a>
+        </p>
+      </div>
+
+        <div class="container mt-5">
+          <h2 class="mt-5 mb-5">Your files :</h2>
+          <div class="row ">
+        
+            <% for(let p of playlist.playlists){ %>
+            <div class="col-md-6 col-lg-4 mb-3">
+            
+                <div class="card event" data-aos="fade-up" data-aos-delay="100">
+                 
+                  <div class="card-body">
+                    <h5 class="card-title text-secondary"><i><%=p.title%></i></h5>
+                    <% for(let img of p.media_file){ %>                    
+                      <img class="card-img" src="<%=img.url%>"></img>
+                    <%}%>
+                    <!-- <a href="/dashboard/<%=currentUser.id%>/playlists/<%=p._id%>/player">Play</a> -->
+                    <br>
+                     <form action="/dashboard/<%=currentUser.id%>/playlists/<%=p._id%>?_method=DELETE" method="POST">
+                      <button class="btn btn-outline-danger mt-3">Delete</button>
+                    </form>
+                  </div>
+                </div>
+            </div>
+            <%}%>
+          </div>
+        </div>   
         </div>
     
 

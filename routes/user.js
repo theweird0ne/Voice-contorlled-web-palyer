@@ -5,59 +5,36 @@ const User=require('../models/user');
 const catchAsync=require('../utils/catchAsync');
 const {isLoggedIn}=require('../middleware');
 const Playlist=require('../models/playlist');
+const methodOverride=require('method-override')
+const users=require('../controllers/users');
+
+const multer=require('multer');
+const {storage}=require('../cloudinary')
+const upload=multer({storage});
+
+router.route('/register')
+        .get(users.register)
+        .post(catchAsync(users.createUser));
 
 
-router.get('/register',(req,res)=>{
-    res.render('users/register');
-})
+router.route('/login')
+        .get(users.login)
+        .post(passport.authenticate('local',{failureFlash:true,failureRedirect:'/login'}),users.loggedIn)
 
+router.get('/logout',users.logout);
 
-router.post('/register',catchAsync(async(req,res,next)=>{
-    try{
-    const {email,name,username,password}=req.body;
-    const user=new User({email,username,name});
-    const registeredUser=await User.register(user,password);
-    req.login(registeredUser,err=>{
-        if(err) return next(err);
-        req.flash('success',"welcome");
-        res.redirect('/');
-    })
-    }
-    catch(e){
-        res.redirect('/register');
-    }
-}))
+router.get('/dashboard/:id',isLoggedIn,catchAsync(users.dashboard));
 
-router.get('/login',(req,res)=>{
-    res.render('users/login');
-})
+router.get('/new',isLoggedIn,users.Form);
 
-router.post('/login',passport.authenticate('local',{failureFlash:true,failureRedirect:'/login'}),(req,res)=>{
-    req.flash('success',"welcome back");
-    const redirectUrl=req.session.returnTo || '/';
-    delete req.session.returnTo;
-    res.redirect(redirectUrl);
-})
+router.post('/dashboard/:id',upload.array('image'),catchAsync(users.upload));
 
-router.get('/logout',(req,res)=>{
-    req.logout();
-    req.flash("success","Logged Out");
-    res.redirect('/');
-})
+router.delete('/dashboard/:id/playlists/:playlist_id',catchAsync(users.deleteFile))
 
-router.get('/dashboard/:id',isLoggedIn,catchAsync(async(req,res)=>{
-    const playlist=await User.findById(req.params.id).populate('playlists');
-    console.log(playlist);
-    res.render("dashboard",{playlist});
-}))
-
-router.post('/dashboard/:id',catchAsync(async(req,res)=>{
-    const user=await User.findById(req.params.id);
-    const playlist=new Playlist(req.body.playlist);
-    user.playlists.push(playlist);
-    await playlist.save();
-    await user.save();
-    res.redirect('/dashboard');
+router.get('/dashboard/:id/playlists/:playlist_id/player' ,catchAsync(async(req,res,next)=>{
+        const playlist=await Playlist.findById(req.params.playlist_id);
+        console.log(playlist)
+        res.render('display',{playlist});
 }))
 
 

@@ -2,27 +2,70 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>HTML Video Player</title>
-  <link rel="stylesheet" href="assets/css/style.css">
+  <title>Video Player</title>
+  <link rel="stylesheet" href="/assets/css/style.css">
+     <!-- CSS only -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
 </head>
 <body>
+  
     <div class="words" contenteditable>
     </div>
-   <div class="player">
-     <video class="player__video viewer" src="assets/652333414.mp4"></video>
 
-     <div class="player__controls">
-       <div class="progress">
-        <div class="progress__filled"></div>
-       </div>
-       <button class="player__button toggle" title="Toggle Play">►</button>
-       <input id="volume" type="range" name="volume" class="player__slider" min="0" max="1" step="0.05" data-value="1">
-       <input type="range" name="playbackRate" class="player__slider" min="0.5" max="2" step="0.1" value="1">
-       <button data-skip="-10" class="player__button">« 10s</button>
-       <button data-skip="10" class="player__button">10s »</button>
-     </div>
+    <div class="jumbotron ">
+      <div class="container">
+        <h1 class="display-4">Hello</h1>
+      <p class="lead">Enjoy our voice controlled web player.</p>
+      <hr class="my-4">
+      <p>Commands: </p>
+      <ul>
+        <li>"Play" to start playing</li>  
+        <li>"Pause" to pause the video</li>
+        <li>Volume Increase/Decrease:
+          <ul>
+            <li>Say "Increase"</li>
+            <li>Say "Decrease"</li>
+          </ul>
+        </li>
+        <li>To go forward/backward:</li>
+        <ul>
+          <li>Say "forward"</li>
+          <li>Say "back"</li>
+        </ul>
+      </ul>
 
-   </div>
-  <script src="assets/js/script.js"></script>
+      <br>
+      <br>
+      <hr>
+    </div>
+      </div>
+
+      <div class="container1">
+        <div class="col-md-6">
+          <div class="player">
+            <video class="player__video viewer" src="/assets/652333414.mp4"></video>
+         
+            <div class="player__controls">
+              <div class="progress">
+               <div class="progress__filled"></div>
+              </div>
+                <button class="player__button toggle btn" title="Toggle Play"><span class="fas fa-play"></span></button>
+                <button data-skip="-10" class="btn player__button"><i class="fas fa-chevron-left"></i></button>
+                <button data-skip="10" class="btn player__button"><i class="fas fa-chevron-right"></i></button>
+                <span></span>
+              <input id="volume" type="range" name="volume" class="player__slider" min="0" max="1" step="0.05" data-value="1">
+              <!-- <input type="range" name="playbackRate" class="player__slider" min="0.5" max="2" step="0.1" value="1"> -->
+          
+            </div>
+           </div>
+        </div>
+        </div>
+     
+      <!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script> 
+<script src="/assets/js/script.js"></script>
+
+</script>
 </body>
 </html>
